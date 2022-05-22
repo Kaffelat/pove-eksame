@@ -3,11 +3,10 @@ package com.example.eksamensproeveprojektmedklassen.services;
 import com.example.eksamensproeveprojektmedklassen.dto.CandidateRequest;
 import com.example.eksamensproeveprojektmedklassen.dto.CandidateResponse;
 import com.example.eksamensproeveprojektmedklassen.entities.Candidate;
-import com.example.eksamensproeveprojektmedklassen.error.NotFoundException;
+import com.example.eksamensproeveprojektmedklassen.error.CandidateNotFoundException;
 import com.example.eksamensproeveprojektmedklassen.repositories.CandidateRepository;
 import com.example.eksamensproeveprojektmedklassen.repositories.PartyRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -29,11 +28,11 @@ public class CandidateService {
         return CandidateResponse.getCandidatesFromEntites(candidates);
     }
     public CandidateResponse getCandidate(long id){
-        Candidate candidate = candidateRepository.findById(id).orElseThrow(()-> new NotFoundException("Kunne ikke finde en kandidat med dette id"));
+        Candidate candidate = candidateRepository.findById(id).orElseThrow(()-> new CandidateNotFoundException(id));
         return new CandidateResponse(candidate);
     }
     public CandidateResponse editCandidate(CandidateRequest body ,long id){
-        Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new NotFoundException("Kunne ikke rette den ønskede kandidat på grund af forkert id"));
+        Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new CandidateNotFoundException(id));
         candidate.setFirstName(body.getFirstName());
         candidate.setFirstName(body.getLastName());
         //if(body.getPartyId() > 0) candidate.setParty(partyRepository.getReferenceById(body.getPartyId()));

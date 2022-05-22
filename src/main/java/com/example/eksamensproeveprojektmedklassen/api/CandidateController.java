@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/Candidates")
+@RequestMapping("api/candidates")
 public class CandidateController {
     CandidateService candidateService;
     public CandidateController (CandidateService candidateService){

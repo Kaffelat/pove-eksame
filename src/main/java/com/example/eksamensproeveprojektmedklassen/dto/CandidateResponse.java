@@ -25,7 +25,7 @@ public class CandidateResponse {
         this.id = candidate.getId();
         this.firstName = candidate.getFirstName();
         this.lastName = candidate.getLastName();
-        this.partyId = candidate.getParty().getId();
+        //this.partyId = candidate.getParty().getId();
     }
 
     public static List<CandidateResponse> getCandidatesFromEntites(List<Candidate> candidates) {

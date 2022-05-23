@@ -1,6 +1,7 @@
 package com.example.eksamensproeveprojektmedklassen.entities;
 
 import com.example.eksamensproeveprojektmedklassen.dto.PartyRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,11 @@ public class Party {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String partyName;
+    private String partyLetter;
 
-    @OneToMany(mappedBy = "party")
+    @JsonIgnore
+    @OneToMany(mappedBy = "party", fetch = FetchType.EAGER)
     private Set<Candidate> partyCandidates = new HashSet<>();
 
     @CreationTimestamp
@@ -33,11 +35,22 @@ public class Party {
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    public Party(String partyName) {
+    public Party(String partyName, String partyLetter) {
         this.partyName = partyName;
+        this.partyLetter = partyLetter;
     }
-    public Party(PartyRequest body){
-        this.id = body.getId();
-        this.partyName = body.getPartyName();
+
+//Metoder fra Mark som blev lagt op i klassen. Grunden til metoderne ligger her er for at det altid bliver gjort for begge entiteter så det forminsker fejl ved at glemme at sætte det i begge ender
+    public void addCandidate(Candidate candidate){
+        this.partyCandidates.add(candidate);
+        candidate.setParty(this);
     }
+
+    public void addCandidates(Set<Candidate> candidates){
+        this.partyCandidates.addAll(candidates);
+        for (Candidate candidate : candidates) {
+            candidate.setParty(this);
+        }
+    }
+
 }

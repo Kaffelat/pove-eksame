@@ -21,29 +21,20 @@ public class Candidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
+    private String name;
 
-    private String lastName;
+    private String partyLetter;
 
-    @CreationTimestamp
-    private LocalDateTime createDate;
-
-    @UpdateTimestamp
-    private LocalDateTime lastUpdated;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Party party;
 
-    public Candidate(String firstName, String lastName, Party party) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.party = party;
+    public Candidate(String name) {
+        this.name = name;
+
     }
 
     public Candidate(CandidateRequest body){
-        this.id = body.getId();
-        this.firstName = body.getFirstName();
-        this.lastName = body.getLastName();
-
+        this.name = body.getName();
+        this.partyLetter = body.getPartyLetter();
     }
 }

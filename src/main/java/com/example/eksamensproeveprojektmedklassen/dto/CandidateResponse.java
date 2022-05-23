@@ -16,19 +16,13 @@ import java.util.stream.Collectors;
 @Setter
 public class CandidateResponse {
     private long id;
-    private String firstName;
-    private String lastName;
-
-    private long partyId;
+    private String name;
+    private String partyLetter;
 
     public CandidateResponse(Candidate candidate) {
         this.id = candidate.getId();
-        this.firstName = candidate.getFirstName();
-        this.lastName = candidate.getLastName();
-        //this.partyId = candidate.getParty().getId();
+        this.name = candidate.getName();
+        //this.partyLetter = candidate.getParty().getPartyLetter();
     }
 
-    public static List<CandidateResponse> getCandidatesFromEntites(List<Candidate> candidates) {
-        return candidates.stream().map(CandidateResponse::new).collect(Collectors.toList());
-    }
 }
